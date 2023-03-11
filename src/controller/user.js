@@ -30,7 +30,7 @@ class UserController {
       return res.status(400).send({ error: 'Usuário já cadastrado' })
     }
 
-    const hashPassword = bcrypt.hashSync(password, SALT)
+    const hashPassword = bcrypt.hashSync(password, Number(SALT))
 
     const user = await UserRepository.create({
       name,
