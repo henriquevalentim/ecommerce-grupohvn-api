@@ -7,7 +7,15 @@ class RegisterUser {
     this.authenticateUser = authenticateUser
   }
 
-  async execute({ name, email, birthDate, cpf, password, confirmPassword }) {
+  async execute({
+    name,
+    email,
+    birthDate,
+    cpf,
+    password,
+    confirmPassword,
+    genre
+  }) {
     if (password !== confirmPassword) {
       throw new Error('As senhas não conferem')
     }
@@ -23,12 +31,13 @@ class RegisterUser {
       throw new Error('Todos os campos são obrigatorios')
     }
 
-    const filter = {
-      $or: [{ email: email }, { cpf: cpf }]
-    }
-    const userFinded = await this.userRepository.find(filter)
-    if (userFinded.length > 0) {
-      if (userFinded[0].email === email) {
+    const userFinded = await this.userRepository.findByEmailOrCpf({
+      email,
+      cpf
+    })
+
+    if (userFinded) {
+      if (userFinded.email === email) {
         throw new Error('Email já cadastrado')
       }
       throw new Error('CPF já cadastrado')
@@ -41,8 +50,10 @@ class RegisterUser {
       email,
       birthDate,
       cpf,
-      password: hashPassword
+      password: hashPassword,
+      genre
     })
+
     const token = this.authenticateUser.execute({ email, password })
     return token
   }

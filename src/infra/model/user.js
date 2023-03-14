@@ -6,7 +6,9 @@ const User = new Schema({
   email: { type: String, required: true },
   birthDate: { type: Date, required: true },
   cpf: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  genre: { type: String, required: false },
+  registerDate: { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model('User', User)

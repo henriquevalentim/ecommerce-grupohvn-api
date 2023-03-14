@@ -12,24 +12,21 @@ class AuthenticateUser {
       throw new Error('Email e senha são obrigatorios')
     }
 
-    const filter = {
-      email: email
-    }
-    const userFinded = await this.userRepository.find(filter)
-    if (userFinded.length === 0) {
+    const userFinded = await this.userRepository.findByEmail(email)
+    if (!userFinded) {
       throw new Error('Usuário não cadastrado')
     }
 
-    const authorized = bcrypt.compareSync(password, userFinded[0].password)
+    const authorized = bcrypt.compareSync(password, userFinded.password)
     if (!authorized) {
       throw new Error('Senha incorreta')
     }
 
     const token = jwt.sign(
       {
-        id: userFinded[0]._id,
-        email: userFinded[0].email,
-        name: userFinded[0].name
+        id: userFinded._id,
+        email: userFinded.email,
+        name: userFinded.name
       },
       SECRET_KEY_JWT
     )

@@ -4,8 +4,8 @@ const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 dotenv.config()
 
-const database = require('./config/database')
-const userRoutes = require('./routes/user')
+const database = require('./infra/config/database')
+const userRoutes = require('./main/routes/user')
 const PORT = process.env.PORT || 3000
 
 const app = express()

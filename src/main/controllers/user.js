@@ -1,11 +1,11 @@
-const UserRepository = require('../model/user')
-const RegisterUser = require('../services/user/registerUser')
-const AuthenticateUser = require('../services/user/authenticateUser')
+const UserRepository = require('../../infra/repository/userRepository')
+const RegisterUser = require('../../domain/usecases/user/registerUser')
+const AuthenticateUser = require('../../domain/usecases/user/authenticateUser')
 
 class UserController {
   async create(req, res) {
     try {
-      const { name, email, birthDate, cpf, password, confirmPassword } =
+      const { name, email, birthDate, cpf, password, confirmPassword, genre } =
         req.body
       const authenticateUser = new AuthenticateUser(UserRepository)
       const registerUser = new RegisterUser(UserRepository, authenticateUser)
@@ -15,7 +15,8 @@ class UserController {
         birthDate,
         cpf,
         password,
-        confirmPassword
+        confirmPassword,
+        genre
       })
       return res.status(200).json({ token })
     } catch (error) {
