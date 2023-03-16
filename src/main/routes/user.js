@@ -3,7 +3,7 @@ let app = require('express').Router()
 
 const UserController = require('../controllers/user')
 
-app.route('/').post((req, res) => UserController.create(req, res))
+app.route('/register').post((req, res) => UserController.create(req, res))
 app.route('/login').post((req, res) => UserController.login(req, res))
 
 module.exports = app

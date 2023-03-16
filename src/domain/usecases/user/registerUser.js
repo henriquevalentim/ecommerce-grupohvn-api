@@ -1,6 +1,6 @@
-const SALT = process.env.SALT
 const bcrypt = require('bcrypt')
-
+const NodeMailer = require('../../../main/adapters/nodemailer')
+const SALT = process.env.SALT
 class RegisterUser {
   constructor(userRepository, authenticateUser) {
     this.userRepository = userRepository
@@ -53,6 +53,10 @@ class RegisterUser {
       password: hashPassword,
       genre
     })
+
+    const subject = 'Bem vindo ✔'
+
+    await NodeMailer.sendWelcomeEmail({ to: email, subject, name })
 
     const token = this.authenticateUser.execute({ email, password })
     return token
