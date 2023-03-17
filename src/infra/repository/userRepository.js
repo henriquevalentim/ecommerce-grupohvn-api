@@ -17,6 +17,11 @@ class UserRepository {
     return user
   }
 
+  async findById(id) {
+    const user = await this.userRepository.findById(id).lean()
+    return user
+  }
+
   async findByEmail(email) {
     const filter = {
       email: email

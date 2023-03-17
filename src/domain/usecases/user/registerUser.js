@@ -54,9 +54,11 @@ class RegisterUser {
       genre
     })
 
-    const subject = 'Bem vindo ✔'
-
-    await NodeMailer.sendWelcomeEmail({ to: email, subject, name })
+    await NodeMailer.sendWelcomeEmail({
+      to: email,
+      subject: 'Bem vindo ✔',
+      name
+    })
 
     const token = this.authenticateUser.execute({ email, password })
     return token
