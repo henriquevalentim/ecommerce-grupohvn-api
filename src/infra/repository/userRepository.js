@@ -1,8 +1,8 @@
-const userModel = require('../../infra/model/user')
+const userSchema = require('../schema/user')
 
 class UserRepository {
   constructor() {
-    this.userRepository = userModel
+    this.userRepository = userSchema
   }
 
   async create({ name, email, birthDate, cpf, password, genre }) {
