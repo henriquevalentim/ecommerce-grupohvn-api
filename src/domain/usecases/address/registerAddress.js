@@ -27,6 +27,14 @@ class RegisterAddress {
     ) {
       throw new Error('Todos os dados são obrigatórios')
     }
+    const addressFinded = await this.addressRepository.getAddressByUserId({
+      userId
+    })
+
+    if (!addressFinded.length) {
+      isMain = true
+    }
+
     const address = await this.addressRepository.create({
       name,
       zipCode,

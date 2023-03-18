@@ -1,6 +1,7 @@
 const AddressRepository = require('../../infra/repository/addressRepository')
 const RegisterAddress = require('../../domain/usecases/address/registerAddress')
 const GetAddressUser = require('../../domain/usecases/address/getAdressUser')
+const UpdateMainAddress = require('../../domain/usecases/address/updateMainAddress')
 
 class AddressController {
   async create(req, res) {
@@ -44,6 +45,20 @@ class AddressController {
 
       const getAddressUser = new GetAddressUser(AddressRepository)
       const address = await getAddressUser.execute({ userId })
+      return res.status(200).json(address)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async updateMainAddress(req, res) {
+    try {
+      const { id: userId } = req
+      const { addressId } = req.body
+
+      const updateMainAddress = new UpdateMainAddress(AddressRepository)
+      const address = await updateMainAddress.execute({ userId, addressId })
       return res.status(200).json(address)
     } catch (error) {
       console.log(error)

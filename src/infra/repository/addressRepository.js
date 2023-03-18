@@ -37,6 +37,16 @@ class AddressRepository {
     const address = await this.addressRepository.find(filter)
     return address
   }
+
+  async updateMainAddress({ addressId, status }) {
+    const filter = { _id: addressId }
+    const address = await this.addressRepository
+      .updateOne(filter, {
+        isMain: status
+      })
+      .lean()
+    return address
+  }
 }
 
 module.exports = new AddressRepository()

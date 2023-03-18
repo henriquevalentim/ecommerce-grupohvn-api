@@ -11,5 +11,8 @@ app.post('/register', isAuthenticated, (req, res) =>
 app.get('/user', isAuthenticated, (req, res) =>
   AddressController.getAdressUser(req, res)
 )
+app.put('/setMainAddress', isAuthenticated, (req, res) =>
+  AddressController.updateMainAddress(req, res)
+)
 
 module.exports = app
