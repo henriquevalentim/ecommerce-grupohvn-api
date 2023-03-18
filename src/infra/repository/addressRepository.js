@@ -31,6 +31,12 @@ class AddressRepository {
     })
     return address
   }
+
+  async getAddressByUserId({ userId }) {
+    const filter = { userId: userId }
+    const address = await this.addressRepository.find(filter)
+    return address
+  }
 }
 
 module.exports = new AddressRepository()
