@@ -10,5 +10,8 @@ app.post('/login', (req, res) => UserController.login(req, res))
 app.get('/userData', isAuthenticated, (req, res) =>
   UserController.userData(req, res)
 )
+app.put('/userData', isAuthenticated, (req, res) =>
+  UserController.editUserData(req, res)
+)
 
 module.exports = app

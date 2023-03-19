@@ -37,6 +37,14 @@ class UserRepository {
     const user = await this.userRepository.findOne(filter)
     return user
   }
+
+  async updateById({ id, body }) {
+    const filter = {
+      _id: id
+    }
+    const user = await this.userRepository.updateOne(filter, body)
+    return user
+  }
 }
 
 module.exports = new UserRepository()

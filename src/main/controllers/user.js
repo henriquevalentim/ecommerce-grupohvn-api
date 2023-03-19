@@ -2,6 +2,7 @@ const UserRepository = require('../../infra/repository/userRepository')
 const RegisterUser = require('../../domain/usecases/user/registerUser')
 const AuthenticateUser = require('../../domain/usecases/user/authenticateUser')
 const GetUserData = require('../../domain/usecases/user/getUserData')
+const UpdateUserData = require('../../domain/usecases/user/updateUserData')
 
 class UserController {
   async create(req, res) {
@@ -42,6 +43,17 @@ class UserController {
     try {
       const getUserData = new GetUserData(UserRepository)
       const userData = await getUserData.execute({ id: req.id })
+      return res.status(200).json(userData)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async editUserData(req, res) {
+    try {
+      const updateUserData = new UpdateUserData(UserRepository)
+      const userData = await updateUserData.execute({ id: req.id, ...req.body })
       return res.status(200).json(userData)
     } catch (error) {
       console.log(error)
