@@ -11,7 +11,7 @@ class UpdateUserData {
     if (cpf) body.cpf = cpf
     if (genre) body.genre = genre
 
-    await this.userRepository.updateById(id, body)
+    await this.userRepository.updateById({ id, body })
     return { message: 'Usuário atualizado com sucesso!' }
   }
 }
