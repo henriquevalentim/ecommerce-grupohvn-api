@@ -32,6 +32,21 @@ class AddressRepository {
     return address
   }
 
+  async updateAddressById({ idAddress, body }) {
+    const address = await this.addressRepository.updateOne(
+      { _id: idAddress },
+      body
+    )
+    return address
+  }
+
+  async deleteAddressById({ idAddress }) {
+    const address = await this.addressRepository.deleteOne({
+      _id: idAddress
+    })
+    return address
+  }
+
   async getAddressByUserId({ userId }) {
     const filter = { userId: userId }
     const address = await this.addressRepository.find(filter)
