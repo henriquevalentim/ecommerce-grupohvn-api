@@ -4,6 +4,7 @@ let app = require('express').Router()
 const UserController = require('../controllers/user')
 
 const isAuthenticated = require('../middlewares/isAuthenticated')
+const isAuthenticatedAdmin = require('../middlewares/isAuthenticatedAdmin')
 
 app.post('/register', (req, res) => UserController.create(req, res))
 app.post('/login', (req, res) => UserController.login(req, res))
@@ -12,6 +13,10 @@ app.get('/userData', isAuthenticated, (req, res) =>
 )
 app.put('/userData', isAuthenticated, (req, res) =>
   UserController.editUserData(req, res)
+)
+
+app.get('/', isAuthenticatedAdmin, (req, res) =>
+  UserController.getAllUsers(req, res)
 )
 
 module.exports = app

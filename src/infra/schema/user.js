@@ -8,6 +8,7 @@ const User = new Schema({
   cpf: { type: String, required: true },
   password: { type: String, required: true },
   genre: { type: String, required: false },
+  permission: [{ type: String, required: false }],
   registerDate: { type: Date, default: Date.now }
 })
 

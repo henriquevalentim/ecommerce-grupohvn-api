@@ -3,6 +3,7 @@ const RegisterUser = require('../../domain/usecases/user/registerUser')
 const AuthenticateUser = require('../../domain/usecases/user/authenticateUser')
 const GetUserData = require('../../domain/usecases/user/getUserData')
 const UpdateUserData = require('../../domain/usecases/user/updateUserData')
+const GetAllUsers = require('../../domain/usecases/user/getAllUsers')
 
 class UserController {
   async create(req, res) {
@@ -57,6 +58,16 @@ class UserController {
       return res.status(200).json(userData)
     } catch (error) {
       console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async getAllUsers(req, res) {
+    try {
+      const getAllUsers = new GetAllUsers(UserRepository)
+      const users = await getAllUsers.execute()
+      return res.status(200).json(users)
+    } catch (error) {
       return res.status(400).json({ message: error.message })
     }
   }

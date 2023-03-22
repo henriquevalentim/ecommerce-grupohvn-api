@@ -27,6 +27,7 @@ class AuthenticateUser {
         id: userFinded._id,
         email: userFinded.email,
         name: userFinded.name,
+        permission: userFinded?.permission,
         genre: userFinded?.genre
       },
       SECRET_KEY_JWT
