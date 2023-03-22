@@ -18,5 +18,8 @@ app.put('/userData', isAuthenticated, (req, res) =>
 app.get('/', isAuthenticatedAdmin, (req, res) =>
   UserController.getAllUsers(req, res)
 )
+app.delete('/:userId', isAuthenticatedAdmin, (req, res) =>
+  UserController.deleteUser(req, res)
+)
 
 module.exports = app

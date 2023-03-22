@@ -4,6 +4,7 @@ const AuthenticateUser = require('../../domain/usecases/user/authenticateUser')
 const GetUserData = require('../../domain/usecases/user/getUserData')
 const UpdateUserData = require('../../domain/usecases/user/updateUserData')
 const GetAllUsers = require('../../domain/usecases/user/getAllUsers')
+const DeleteUser = require('../../domain/usecases/user/deleteUser')
 
 class UserController {
   async create(req, res) {
@@ -67,6 +68,17 @@ class UserController {
       const getAllUsers = new GetAllUsers(UserRepository)
       const users = await getAllUsers.execute()
       return res.status(200).json(users)
+    } catch (error) {
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async deleteUser(req, res) {
+    try {
+      const { userId } = req.params
+      const deleteUser = new DeleteUser(UserRepository)
+      const response = await deleteUser.execute({ userId })
+      return res.status(200).json(response)
     } catch (error) {
       return res.status(400).json({ message: error.message })
     }

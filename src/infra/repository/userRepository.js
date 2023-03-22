@@ -50,6 +50,14 @@ class UserRepository {
     const user = await this.userRepository.updateOne(filter, body)
     return user
   }
+
+  async deleteUserById({ userId }) {
+    const filter = {
+      _id: userId
+    }
+    const response = await this.userRepository.deleteOne(filter)
+    return response
+  }
 }
 
 module.exports = new UserRepository()
