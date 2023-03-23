@@ -36,15 +36,13 @@ class CreditCardRepository {
     return creditCard
   }
 
-  async findByShopperReferenceAndBrandAndLastFourDigitsAndFirstEightDigits({
+  async findByShopperReferenceAndLastFourDigitsAndFirstEightDigits({
     shopperReference,
-    brand,
     lastFourDigits,
     firstEightDigits
   }) {
     const creditCards = await this.creditCardRepository.find({
       shopperReference,
-      brand,
       lastFourDigits,
       firstEightDigits
     })
