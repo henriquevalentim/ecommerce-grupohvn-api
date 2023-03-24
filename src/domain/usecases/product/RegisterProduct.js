@@ -1,4 +1,4 @@
-class CreateProduct {
+class RegisterProduct {
   constructor(productRepository) {
     this.productRepository = productRepository
   }
@@ -29,4 +29,4 @@ class CreateProduct {
   }
 }
 
-module.exports = CreateProduct
+module.exports = RegisterProduct
