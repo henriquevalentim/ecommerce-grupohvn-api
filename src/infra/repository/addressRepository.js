@@ -53,6 +53,11 @@ class AddressRepository {
     return address
   }
 
+  async getAddressById({ idAddress }) {
+    const address = await this.addressRepository.findById(idAddress).lean()
+    return address
+  }
+
   async updateMainAddress({ addressId, status }) {
     const filter = { _id: addressId }
     const address = await this.addressRepository
