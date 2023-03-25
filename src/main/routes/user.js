@@ -21,5 +21,8 @@ app.get('/', isAuthenticatedAdmin, (req, res) =>
 app.delete('/:userId', isAuthenticatedAdmin, (req, res) =>
   UserController.deleteUser(req, res)
 )
+app.post('/setAdminInUser/:userId', isAuthenticatedAdmin, (req, res) =>
+  UserController.setAdminInUser(req, res)
+)
 
 module.exports = app

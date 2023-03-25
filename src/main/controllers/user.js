@@ -5,6 +5,7 @@ const GetUserData = require('../../domain/usecases/user/getUserData')
 const UpdateUserData = require('../../domain/usecases/user/updateUserData')
 const GetAllUsers = require('../../domain/usecases/user/getAllUsers')
 const DeleteUser = require('../../domain/usecases/user/deleteUser')
+const SetAdminInUser = require('../../domain/usecases/user/setAdminInUser')
 
 class UserController {
   async create(req, res) {
@@ -78,6 +79,17 @@ class UserController {
       const { userId } = req.params
       const deleteUser = new DeleteUser(UserRepository)
       const response = await deleteUser.execute({ userId })
+      return res.status(200).json(response)
+    } catch (error) {
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async setAdminInUser(req, res) {
+    try {
+      const { userId } = req.params
+      const setAdminInUser = new SetAdminInUser(UserRepository)
+      const response = await setAdminInUser.execute({ id: userId })
       return res.status(200).json(response)
     } catch (error) {
       return res.status(400).json({ message: error.message })
