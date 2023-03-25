@@ -8,6 +8,9 @@ const isAuthenticated = require('../middlewares/isAuthenticated')
 app.post('/register', isAuthenticated, (req, res) =>
   AddressController.create(req, res)
 )
+app.put('/setMainAddress', isAuthenticated, (req, res) =>
+  AddressController.updateMainAddress(req, res)
+)
 app.put('/:idAddress', isAuthenticated, (req, res) =>
   AddressController.updateAddress(req, res)
 )
@@ -16,9 +19,6 @@ app.delete('/:idAddress', isAuthenticated, (req, res) =>
 )
 app.get('/user', isAuthenticated, (req, res) =>
   AddressController.getAdressUser(req, res)
-)
-app.put('/setMainAddress', isAuthenticated, (req, res) =>
-  AddressController.updateMainAddress(req, res)
 )
 
 module.exports = app
