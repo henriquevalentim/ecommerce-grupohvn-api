@@ -30,12 +30,22 @@ class ProductRepository {
   }
 
   async getProductById(idProduct) {
-    const product = await this.productRepository.findOne({ _id: idProduct })
+    const product = await this.productRepository
+      .findOne({ _id: idProduct })
+      .lean()
     return product
   }
 
   async deleteProductById(idProduct) {
     const product = await this.productRepository.deleteOne({ _id: idProduct })
+    return product
+  }
+
+  async updateProductById(idProduct, body) {
+    const product = await this.productRepository.updateOne(
+      { _id: idProduct },
+      body
+    )
     return product
   }
 }

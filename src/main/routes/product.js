@@ -15,5 +15,10 @@ app.get('/', isAuthenticated, (req, res) =>
 app.delete('/:idProduct', isAuthenticadedAdmin, (req, res) =>
   ProductController.deleteProductById(req, res)
 )
+app.post(
+  '/addTechnicalInformation/:idProduct',
+  isAuthenticadedAdmin,
+  (req, res) => ProductController.addTechnicalInformation(req, res)
+)
 
 module.exports = app

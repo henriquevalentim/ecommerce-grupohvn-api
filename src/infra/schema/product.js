@@ -9,6 +9,7 @@ const Product = new Schema({
   quantity: { type: Number, required: true },
   urlImage: { type: String, required: false },
   status: { type: Boolean, required: true, default: true },
+  technicalInformation: [{ key: String, value: String }],
   registerDate: { type: Date, default: Date.now }
 })
 
