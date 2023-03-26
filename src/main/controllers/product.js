@@ -2,7 +2,7 @@ const ProductRepository = require('../../infra/repository/productRepository')
 const RegisterProduct = require('../../domain/usecases/product/registerProduct')
 const GetAllProducts = require('../../domain/usecases/product/getAllProducts')
 const DeleteProductById = require('../../domain/usecases/product/deleteProductById')
-const AddTechnicalInformation = require('../../domain/usecases/product/AddTechnicalInformation')
+const AddTechnicalInformation = require('../../domain/usecases/product/addTechnicalInformation')
 
 class ProductController {
   async create(req, res) {
