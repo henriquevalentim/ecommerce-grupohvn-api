@@ -23,6 +23,21 @@ class ProductRepository {
     const product = await this.productRepository.findOne(filter)
     return product
   }
+
+  async getAllProductsByFilter(filter = {}) {
+    const product = await this.productRepository.find(filter)
+    return product
+  }
+
+  async getProductById(idProduct) {
+    const product = await this.productRepository.findOne({ _id: idProduct })
+    return product
+  }
+
+  async deleteProductById(idProduct) {
+    const product = await this.productRepository.deleteOne({ _id: idProduct })
+    return product
+  }
 }
 
 module.exports = new ProductRepository()
