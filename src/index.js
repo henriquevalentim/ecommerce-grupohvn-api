@@ -11,6 +11,7 @@ const product = require('./main/routes/product')
 const payment = require('./main/routes/payment')
 const creditCard = require('./main/routes/creditCard')
 const setting = require('./main/routes/setting')
+const frete = require('./main/routes/frete')
 const PORT = process.env.PORT || 3000
 
 const app = express()
@@ -25,5 +26,6 @@ app.use('/product', product)
 app.use('/creditCard', creditCard)
 app.use('/payment', payment)
 app.use('/setting', setting)
+app.use('/frete', frete)
 
 app.listen(PORT)
