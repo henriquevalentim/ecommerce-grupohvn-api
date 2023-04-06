@@ -67,6 +67,15 @@ class AddressRepository {
       .lean()
     return address
   }
+
+  async getDefaultAddressUser({ userId }) {
+    const filter = {
+      userId,
+      isMain: true
+    }
+    const address = await this.addressRepository.findOne(filter).lean()
+    return address
+  }
 }
 
 module.exports = new AddressRepository()

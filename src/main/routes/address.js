@@ -20,5 +20,8 @@ app.delete('/:idAddress', isAuthenticated, (req, res) =>
 app.get('/user', isAuthenticated, (req, res) =>
   AddressController.getAdressUser(req, res)
 )
+app.get('/default', isAuthenticated, (req, res) =>
+  AddressController.getDefaultAddressUser(req, res)
+)
 
 module.exports = app

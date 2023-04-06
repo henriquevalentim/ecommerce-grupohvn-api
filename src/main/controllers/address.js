@@ -4,6 +4,7 @@ const GetAddressUser = require('../../domain/usecases/address/getAdressUser')
 const UpdateMainAddress = require('../../domain/usecases/address/updateMainAddress')
 const DeleteAddress = require('../../domain/usecases/address/deleteAddress')
 const UpdateAddress = require('../../domain/usecases/address/updateAddress')
+const GetDefaultAddressUser = require('../../domain/usecases/address/getDefaultAddressUser')
 
 class AddressController {
   async create(req, res) {
@@ -108,6 +109,22 @@ class AddressController {
 
       const updateMainAddress = new UpdateMainAddress(AddressRepository)
       const address = await updateMainAddress.execute({ userId, addressId })
+      return res.status(200).json(address)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async getDefaultAddressUser(req, res) {
+    try {
+      const { id: userId } = req
+
+      const getDefaultAddress = new GetDefaultAddressUser(AddressRepository)
+      const address = await getDefaultAddress.execute({ userId })
+      if (!address) {
+        return res.status(404).json({ message: 'Nenhum endereço cadastrado' })
+      }
       return res.status(200).json(address)
     } catch (error) {
       console.log(error)
