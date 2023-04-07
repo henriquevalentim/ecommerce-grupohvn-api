@@ -19,5 +19,6 @@ app.post(
   isAuthenticadedAdmin,
   (req, res) => ProductController.addTechnicalInformation(req, res)
 )
+app.post('/codes', (req, res) => ProductController.getProductsByCodes(req, res))
 
 module.exports = app

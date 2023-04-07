@@ -4,6 +4,7 @@ const GetAllProducts = require('../../domain/usecases/product/getAllProducts')
 const GetProductByCode = require('../../domain/usecases/product/getProductByCode')
 const DeleteProductById = require('../../domain/usecases/product/deleteProductById')
 const AddTechnicalInformation = require('../../domain/usecases/product/addTechnicalInformation')
+const GetProductsByCodes = require('../../domain/usecases/product/getProductsByCodes')
 
 class ProductController {
   async create(req, res) {
@@ -78,6 +79,22 @@ class ProductController {
       const products = await addTechnicalInformation.execute({
         idProduct,
         technicalInformation
+      })
+
+      return res.status(200).json(products)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async getProductsByCodes(req, res) {
+    try {
+      const { codes = [] } = req.body
+      const getProductsByCodes = new GetProductsByCodes(ProductRepository)
+
+      const products = await getProductsByCodes.execute({
+        codes
       })
 
       return res.status(200).json(products)
