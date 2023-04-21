@@ -16,8 +16,6 @@ const PORT = process.env.PORT || 3000
 
 const app = express()
 
-console.log('teste', process.env.MONGO_HOST)
-
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

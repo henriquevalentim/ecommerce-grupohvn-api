@@ -6,6 +6,8 @@ const UpdateUserData = require('../../domain/usecases/user/updateUserData')
 const GetAllUsers = require('../../domain/usecases/user/getAllUsers')
 const DeleteUser = require('../../domain/usecases/user/deleteUser')
 const SetAdminInUser = require('../../domain/usecases/user/setAdminInUser')
+const AuthenticateSocialUser = require('../../domain/usecases/user/authenticateSocialUser')
+const RegisterSocialUser = require('../../domain/usecases/user/registerSocialUser')
 
 class UserController {
   async create(req, res) {
@@ -35,6 +37,26 @@ class UserController {
       const { email, password } = req.body
       const authenticateUser = new AuthenticateUser(UserRepository)
       const token = await authenticateUser.execute({ email, password })
+      return res.status(200).json({ token })
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async loginSocial(req, res) {
+    try {
+      const { email, name, typeLogin } = req.body
+      const registerSocialUser = new RegisterSocialUser(UserRepository)
+      const authenticateSocialUser = new AuthenticateSocialUser(
+        UserRepository,
+        registerSocialUser
+      )
+      const token = await authenticateSocialUser.execute({
+        email,
+        name,
+        typeLogin
+      })
       return res.status(200).json({ token })
     } catch (error) {
       console.log(error)

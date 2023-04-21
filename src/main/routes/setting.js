@@ -13,7 +13,7 @@ app.put('/:idSetting', isAuthenticadedAdmin, (req, res) =>
 app.get('/', isAuthenticadedAdmin, (req, res) =>
   SettingController.getAllSettings(req, res)
 )
-app.get('/:codeSetting', isAuthenticadedAdmin, (req, res) =>
+app.get('/:codeSetting', (req, res) =>
   SettingController.getSettingByCode(req, res)
 )
 

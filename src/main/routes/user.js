@@ -8,6 +8,7 @@ const isAuthenticatedAdmin = require('../middlewares/isAuthenticatedAdmin')
 
 app.post('/register', (req, res) => UserController.create(req, res))
 app.post('/login', (req, res) => UserController.login(req, res))
+app.post('/loginSocial', (req, res) => UserController.loginSocial(req, res))
 app.get('/userData', isAuthenticated, (req, res) =>
   UserController.userData(req, res)
 )

@@ -5,14 +5,23 @@ class UserRepository {
     this.userRepository = userSchema
   }
 
-  async create({ name, email, birthDate, cpf, password, genre }) {
+  async create({
+    name,
+    email,
+    birthDate,
+    cpf,
+    password,
+    genre,
+    typeLogin = 'email'
+  }) {
     const user = await this.userRepository.create({
       name,
       email,
       birthDate,
       cpf,
       password,
-      genre
+      genre,
+      typeLogin
     })
     return user
   }
@@ -26,7 +35,7 @@ class UserRepository {
     const filter = {
       email: email
     }
-    const user = await this.userRepository.findOne(filter)
+    const user = await this.userRepository.findOne(filter).lean()
     return user
   }
 
