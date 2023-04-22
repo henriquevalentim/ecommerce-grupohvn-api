@@ -1,6 +1,10 @@
 const ProductRepository = require('../../infra/repository/productRepository')
+const AddressRepository = require('../../infra/repository/addressRepository')
 const OrderRepository = require('../../infra/repository/orderRepository')
 const GetOrdersByUser = require('../../domain/usecases/order/getOrdersByUser')
+const GetFrete = require('../../domain/usecases/frete/getFrete')
+const PayCreditCard = require('../../domain/usecases/payment/payCreditCard')
+const ProcessOrder = require('../../domain/usecases/order/processOrder')
 
 class OrderController {
   async getOrdersByUser(req, res) {
