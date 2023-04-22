@@ -1,27 +1,17 @@
-const UserRepository = require('../../infra/repository/userRepository')
-const RegisterUser = require('../../domain/usecases/user/registerUser')
-const AuthenticateUser = require('../../domain/usecases/user/authenticateUser')
 const PayCreditCard = require('../../domain/usecases/payment/payCreditCard')
 
 class PaymentController {
   async payCreditCard(req, res) {
     try {
-      // const { name, email, birthDate, cpf, password, confirmPassword, genre } =
-      //   req.body
-      // const authenticateUser = new AuthenticateUser(UserRepository)
-      // const registerUser = new RegisterUser(UserRepository, authenticateUser)
-      // const token = await registerUser.execute({
-      //   name,
-      //   email,
-      //   birthDate,
-      //   cpf,
-      //   password,
-      //   confirmPassword,
-      //   genre
-      // })
-
+      const { products, address, payment } = req.body
+      const { id } = req
       const payCreditCard = new PayCreditCard()
-      const response = await payCreditCard.execute()
+      const response = await payCreditCard.execute({
+        userId: id,
+        products,
+        address,
+        payment
+      })
       return res.status(200).json(response)
     } catch (error) {
       console.log(error)

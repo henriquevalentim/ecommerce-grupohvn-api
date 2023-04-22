@@ -25,7 +25,7 @@ class ProductRepository {
   }
 
   async getAllProductsByFilter(filter = {}) {
-    const product = await this.productRepository.find(filter)
+    const product = await this.productRepository.find(filter).lean()
     return product
   }
 
