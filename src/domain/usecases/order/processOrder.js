@@ -57,7 +57,7 @@ class ProcessOrder {
       total: priceProducts + priceFrete
     })
 
-    return response
+    return order
   }
 
   _getStatus({ resultCode }) {
