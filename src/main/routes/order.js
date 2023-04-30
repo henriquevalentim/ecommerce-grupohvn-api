@@ -10,9 +10,9 @@ app.get('/user', isAuthenticated, (req, res) =>
   OrderController.getOrdersByUser(req, res)
 )
 
-// app.get('/', isAuthenticadedAdmin, (req, res) =>
-//   OrderController.getOrders(req, res)
-// )
+app.get('/', isAuthenticadedAdmin, (req, res) =>
+  OrderController.getOrders(req, res)
+)
 
 app.post('/process', isAuthenticated, (req, res) =>
   OrderController.processOrder(req, res)
