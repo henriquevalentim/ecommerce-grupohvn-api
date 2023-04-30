@@ -7,6 +7,7 @@ const GetFrete = require('../../domain/usecases/frete/getFrete')
 const PayCreditCard = require('../../domain/usecases/payment/payCreditCard')
 const ProcessOrder = require('../../domain/usecases/order/processOrder')
 const GetOrders = require('../../domain/usecases/order/getOrders')
+const EditStatusOrder = require('../../domain/usecases/order/editStatusOrder')
 
 class OrderController {
   async getOrdersByUser(req, res) {
@@ -60,6 +61,22 @@ class OrderController {
         address,
         payment,
         email
+      })
+      return res.status(200).json(response)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async editStatusOrder(req, res) {
+    try {
+      const { status } = req.body
+      const { id } = req.params
+      const editStatusOrder = new EditStatusOrder(OrderRepository)
+      const response = await editStatusOrder.execute({
+        orderId: id,
+        status
       })
       return res.status(200).json(response)
     } catch (error) {

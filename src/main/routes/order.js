@@ -18,4 +18,8 @@ app.post('/process', isAuthenticated, (req, res) =>
   OrderController.processOrder(req, res)
 )
 
+app.put('/status/:id', isAuthenticadedAdmin, (req, res) =>
+  OrderController.editStatusOrder(req, res)
+)
+
 module.exports = app
