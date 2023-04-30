@@ -52,6 +52,11 @@ class UserRepository {
     return user
   }
 
+  async getUsersByFilter(filter = {}) {
+    const user = await this.userRepository.find(filter).lean()
+    return user
+  }
+
   async updateById({ id, body }) {
     const filter = {
       _id: id

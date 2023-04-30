@@ -37,6 +37,11 @@ class OrderRepository {
     const order = await this.orderRepository.find(filter).lean()
     return order
   }
+
+  async getOrdersByFilter(filter = {}) {
+    const order = await this.orderRepository.find(filter).lean()
+    return order
+  }
 }
 
 module.exports = new OrderRepository()

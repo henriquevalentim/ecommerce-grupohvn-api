@@ -1,10 +1,12 @@
 const ProductRepository = require('../../infra/repository/productRepository')
 const AddressRepository = require('../../infra/repository/addressRepository')
 const OrderRepository = require('../../infra/repository/orderRepository')
+const UserRepository = require('../../infra/repository/userRepository')
 const GetOrdersByUser = require('../../domain/usecases/order/getOrdersByUser')
 const GetFrete = require('../../domain/usecases/frete/getFrete')
 const PayCreditCard = require('../../domain/usecases/payment/payCreditCard')
 const ProcessOrder = require('../../domain/usecases/order/processOrder')
+const GetOrders = require('../../domain/usecases/order/getOrders')
 
 class OrderController {
   async getOrdersByUser(req, res) {
@@ -18,6 +20,19 @@ class OrderController {
       const response = await getOrdersByUser.execute({
         userId: id
       })
+
+      return res.status(200).json(response)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async getOrders(req, res) {
+    try {
+      const getOrders = new GetOrders(OrderRepository, UserRepository)
+
+      const response = await getOrders.execute()
 
       return res.status(200).json(response)
     } catch (error) {
