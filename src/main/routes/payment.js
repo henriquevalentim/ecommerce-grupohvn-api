@@ -9,4 +9,8 @@ app.post('/', isAuthenticated, (req, res) =>
   PaymentController.payCreditCard(req, res)
 )
 
+app.post('/receiveNotification', (req, res) =>
+  PaymentController.receiveNotification(req, res)
+)
+
 module.exports = app
