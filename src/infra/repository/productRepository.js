@@ -18,6 +18,31 @@ class ProductRepository {
     return product
   }
 
+  async updateById({
+    id,
+    name,
+    code,
+    price,
+    type,
+    quantity,
+    urlImage,
+    status
+  }) {
+    const product = await this.productRepository.updateOne(
+      { _id: id },
+      {
+        name,
+        code,
+        price,
+        type,
+        quantity,
+        urlImage,
+        status
+      }
+    )
+    return product
+  }
+
   async getProductByCode({ code }) {
     const filter = { code: code }
     const product = await this.productRepository.findOne(filter)

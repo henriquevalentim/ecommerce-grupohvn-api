@@ -9,6 +9,9 @@ const isAuthenticadedAdmin = require('../middlewares/isAuthenticatedAdmin')
 app.post('/', isAuthenticadedAdmin, (req, res) =>
   ProductController.create(req, res)
 )
+app.put('/:id', isAuthenticadedAdmin, (req, res) =>
+  ProductController.update(req, res)
+)
 app.get('/', (req, res) => ProductController.getAllProducts(req, res))
 app.get('/:code', (req, res) => ProductController.getProductByCode(req, res))
 app.delete('/:idProduct', isAuthenticadedAdmin, (req, res) =>
