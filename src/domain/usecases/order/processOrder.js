@@ -4,19 +4,25 @@ class ProcessOrder {
     addressRepository,
     orderRepository,
     getFrete,
-    payCreditCard
+    payCreditCard,
+    generateInvoice,
+    userRepository
   ) {
     this.productRepository = productRepository
     this.addressRepository = addressRepository
     this.orderRepository = orderRepository
     this.getFrete = getFrete
     this.payCreditCard = payCreditCard
+    this.generateInvoice = generateInvoice
+    this.userRepository = userRepository
   }
 
   async execute({ userId, products = [], address, payment, email }) {
     if (!userId || !products || !address || !payment || !email) {
       throw new Error('Todos os campos são obrigatorios')
     }
+    let status
+    const metadata = []
     const productsResult = await this._getAllProductsByCode(products)
     const priceProducts = this._calcPriceProducts(products, productsResult)
 
@@ -29,22 +35,47 @@ class ProcessOrder {
       address.sendMethod
     )
 
-    const expiry = payment.card.expiry.split('/')
+    const user = await this.userRepository.findById(userId)
 
-    const response = await this.payCreditCard.execute({
-      cardNumber: payment.card.number,
-      securityCode: payment.card.cvc,
-      expiryMonth: expiry[0],
-      expiryYear: expiry[1],
-      holderName: payment.card.name,
-      amount: priceProducts + priceFrete,
-      installments: payment.installments,
-      reference: `${userId}_${new Date().getTime()}`,
-      shopperReference: userId,
-      shopperEmail: email
-    })
+    if (payment.paymentMethod === 'credit_card') {
+      const expiry = payment.card.expiry.split('/')
 
-    const status = this._getStatus({ resultCode: response?.resultCode })
+      const response = await this.payCreditCard.execute({
+        cardNumber: payment.card.number,
+        securityCode: payment.card.cvc,
+        expiryMonth: expiry[0],
+        expiryYear: expiry[1],
+        holderName: payment.card.name,
+        amount: priceProducts + priceFrete,
+        installments: payment.installments,
+        reference: `${userId}_${new Date().getTime()}`,
+        shopperReference: userId,
+        shopperEmail: email
+      })
+
+      status = this._getStatus({ resultCode: response?.resultCode })
+    } else if (payment.paymentMethod === 'boletobancario') {
+      const response = await this.generateInvoice.execute({
+        name: user.name,
+        email,
+        cpf: user.cpf,
+        amount: priceProducts + priceFrete,
+        address: addressFinded,
+        reference: `${userId}_${new Date().getTime()}`
+      })
+      status = 'Aguardando Pagamento'
+      payment.installments = 1
+      metadata.push(
+        {
+          key: 'boleto_url',
+          value: response?.action.downloadUrl
+        },
+        {
+          key: 'pspReference',
+          value: response?.pspReference
+        }
+      )
+    }
 
     const order = await this.orderRepository.create({
       userId,
@@ -54,7 +85,8 @@ class ProcessOrder {
       installments: payment.installments,
       status,
       products,
-      total: priceProducts + priceFrete
+      total: priceProducts + priceFrete,
+      metadata
     })
 
     return order

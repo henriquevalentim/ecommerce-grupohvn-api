@@ -8,6 +8,7 @@ const PayCreditCard = require('../../domain/usecases/payment/payCreditCard')
 const ProcessOrder = require('../../domain/usecases/order/processOrder')
 const GetOrders = require('../../domain/usecases/order/getOrders')
 const EditStatusOrder = require('../../domain/usecases/order/editStatusOrder')
+const GenerateInvoice = require('../../domain/usecases/payment/generateInvoice')
 
 class OrderController {
   async getOrdersByUser(req, res) {
@@ -48,12 +49,15 @@ class OrderController {
       const { id, email } = req
       const getFrete = new GetFrete()
       const payCreditCard = new PayCreditCard()
+      const generateInvoice = new GenerateInvoice()
       const processOrder = new ProcessOrder(
         ProductRepository,
         AddressRepository,
         OrderRepository,
         getFrete,
-        payCreditCard
+        payCreditCard,
+        generateInvoice,
+        UserRepository
       )
       const response = await processOrder.execute({
         userId: id,

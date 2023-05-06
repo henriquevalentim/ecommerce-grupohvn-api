@@ -15,6 +15,7 @@ const Order = new Schema({
       quantity: { type: Number, required: true }
     }
   ],
+  metadata: [{ key: String, value: String }],
   total: { type: Number, required: true },
   registerDate: { type: Date, default: Date.now }
 })

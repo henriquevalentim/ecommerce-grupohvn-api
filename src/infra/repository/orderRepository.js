@@ -14,7 +14,8 @@ class OrderRepository {
     installments,
     status,
     products,
-    total
+    total,
+    metadata
   }) {
     const order = await this.orderRepository.create({
       userId,
@@ -25,7 +26,8 @@ class OrderRepository {
       installments,
       status,
       products,
-      total
+      total,
+      metadata
     })
     return order
   }
