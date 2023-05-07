@@ -22,7 +22,7 @@ class PaymentController {
   async receiveNotification(req, res) {
     try {
       console.log(JSON.stringify(req.body))
-      return res.status(200).json({ ok: true })
+      return res.status(200).json('[accepted]')
     } catch (error) {
       console.log(error)
       return res.status(400).json({ message: error.message })
