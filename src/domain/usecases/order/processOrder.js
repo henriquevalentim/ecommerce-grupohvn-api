@@ -61,7 +61,7 @@ class ProcessOrder {
         cpf: user.cpf,
         amount: priceProducts + priceFrete,
         address: addressFinded,
-        reference: `${userId}_${new Date().getTime()}`
+        reference: `${userId}_${new Date().toISOString()}`
       })
       status = 'Aguardando Pagamento'
       payment.installments = 1

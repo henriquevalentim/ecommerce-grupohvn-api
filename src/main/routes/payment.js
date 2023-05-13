@@ -13,4 +13,8 @@ app.post('/receiveNotification', (req, res) =>
   PaymentController.receiveNotification(req, res)
 )
 
+app.post('/generatePaymentLink', (req, res) =>
+  PaymentController.generatePaymentLink(req, res)
+)
+
 module.exports = app
