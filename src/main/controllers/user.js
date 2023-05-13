@@ -107,6 +107,18 @@ class UserController {
     }
   }
 
+  async getUserById(req, res) {
+    try {
+      const { userId } = req.params
+      const getUserData = new GetUserData(UserRepository)
+      const userData = await getUserData.execute({ id: userId })
+      return res.status(200).json(userData)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
   async setAdminInUser(req, res) {
     try {
       const { userId } = req.params
