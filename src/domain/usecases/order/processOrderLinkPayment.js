@@ -18,7 +18,7 @@ class ProcessOrderLinkPayment {
 
     const order = await this.orderRepository.create({
       userId,
-      paymentMethod: 'LINK_PAYMENT',
+      paymentMethod: 'link_payment',
       status: 'Aguardando Pagamento',
       products: [],
       total: amount,
