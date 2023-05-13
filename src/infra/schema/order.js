@@ -3,11 +3,11 @@ const Schema = mongoose.Schema
 
 const Order = new Schema({
   userId: { type: String, required: true },
-  addressId: { type: String, required: true },
-  sendMethod: { type: String, required: true },
+  addressId: { type: String, required: false },
+  sendMethod: { type: String, required: false },
   paymentMethod: { type: String, required: true },
   creditCardId: { type: String, required: false },
-  installments: { type: Number, required: true },
+  installments: { type: Number, required: false },
   status: { type: String, required: true },
   products: [
     {

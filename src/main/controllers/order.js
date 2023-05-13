@@ -9,6 +9,8 @@ const ProcessOrder = require('../../domain/usecases/order/processOrder')
 const GetOrders = require('../../domain/usecases/order/getOrders')
 const EditStatusOrder = require('../../domain/usecases/order/editStatusOrder')
 const GenerateInvoice = require('../../domain/usecases/payment/generateInvoice')
+const ProcessOrderLinkPayment = require('../../domain/usecases/order/processOrderLinkPayment')
+const GeneratePaymentLink = require('../../domain/usecases/payment/generatePaymentLink')
 
 class OrderController {
   async getOrdersByUser(req, res) {
@@ -65,6 +67,25 @@ class OrderController {
         address,
         payment,
         email
+      })
+      return res.status(200).json(response)
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async processOrderLinkPayment(req, res) {
+    try {
+      const { userId, amount } = req.body
+      const generatePaymentLink = new GeneratePaymentLink(UserRepository)
+      const processOrderLinkPayment = new ProcessOrderLinkPayment(
+        OrderRepository,
+        generatePaymentLink
+      )
+      const response = await processOrderLinkPayment.execute({
+        userId,
+        amount
       })
       return res.status(200).json(response)
     } catch (error) {

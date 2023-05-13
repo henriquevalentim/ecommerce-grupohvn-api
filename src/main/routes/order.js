@@ -18,6 +18,10 @@ app.post('/process', isAuthenticated, (req, res) =>
   OrderController.processOrder(req, res)
 )
 
+app.post('/processLinkPayment', isAuthenticadedAdmin, (req, res) =>
+  OrderController.processOrderLinkPayment(req, res)
+)
+
 app.put('/status/:id', isAuthenticadedAdmin, (req, res) =>
   OrderController.editStatusOrder(req, res)
 )
